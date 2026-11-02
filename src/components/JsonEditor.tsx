@@ -119,6 +119,7 @@ interface JsonEditorProps {
   placeholder?: string
   ariaLabel: string
   className?: string
+  language?: 'json' | 'text'
 }
 
 export function JsonEditor({
@@ -130,12 +131,12 @@ export function JsonEditor({
   placeholder,
   ariaLabel,
   className,
+  language = 'json',
 }: JsonEditorProps) {
   const viewRef = useRef<EditorView | null>(null)
 
-  const extensions = useMemo<Extension[]>(
-    () => [
-      json(),
+  const extensions = useMemo<Extension[]>(() => {
+    const base = [
       errorLineField,
       EditorView.contentAttributes.of({
         'aria-label': ariaLabel,
@@ -143,9 +144,10 @@ export function JsonEditor({
         autocapitalize: 'off',
         autocorrect: 'off',
       }),
-    ],
-    [ariaLabel],
-  )
+    ]
+
+    return language === 'json' ? [json(), ...base] : base
+  }, [ariaLabel, language])
 
   const basicSetup = useMemo<BasicSetupOptions>(
     () => ({

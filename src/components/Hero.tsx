@@ -2,10 +2,13 @@ import {
   ArrowRight,
   BookOpen,
   Cpu,
+  FileSpreadsheet,
   GitBranch,
+  GitCompareArrows,
   LockKeyhole,
   ShieldCheck,
   Sparkles,
+  Wand2,
   Zap,
 } from 'lucide-react'
 
@@ -13,6 +16,9 @@ const features = [
   { icon: Zap, label: 'Instant validation' },
   { icon: Cpu, label: 'Web Worker powered' },
   { icon: GitBranch, label: 'Tree explorer' },
+  { icon: GitCompareArrows, label: 'Side-by-side diff' },
+  { icon: FileSpreadsheet, label: 'CSV ↔ JSON' },
+  { icon: Wand2, label: 'Schema examples' },
   { icon: LockKeyhole, label: 'Zero uploads' },
 ]
 
@@ -47,11 +53,11 @@ export function Hero() {
           </p>
 
           <div className="animate-fade-up animation-delay-2 mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href="#workspace" className="btn-primary w-full px-5 py-2.5 text-sm sm:w-auto">
+            <a href="#/formatter" className="btn-primary w-full px-5 py-2.5 text-sm sm:w-auto">
               Open the workspace
               <ArrowRight className="size-4" />
             </a>
-            <a href="#docs" className="btn-secondary w-full px-5 py-2.5 text-sm sm:w-auto">
+            <a href="#/docs" className="btn-secondary w-full px-5 py-2.5 text-sm sm:w-auto">
               <BookOpen className="size-4" />
               Read the docs
             </a>

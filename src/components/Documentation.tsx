@@ -19,6 +19,18 @@ const controls = [
   { term: 'Sort keys', detail: 'Recursively orders object keys alphabetically without changing values.' },
   { term: 'Pretty nested', detail: 'Keeps nested containers expanded or renders them inline.' },
   { term: 'Array layout', detail: 'Expand every array across lines, or compact primitive arrays.' },
+  {
+    term: 'Compare',
+    detail: 'Drop two documents side by side to get a semantic diff of every addition, removal, and change.',
+  },
+  {
+    term: 'CSV ↔ JSON',
+    detail: 'Convert CSV rows to JSON objects or flatten JSON into CSV with delimiter and header controls.',
+  },
+  {
+    term: 'Schema examples',
+    detail: 'Generate sample documents from a JSON Schema or an existing JSON sample, including constraints, enums, formats, and local refs.',
+  },
 ]
 
 const shortcuts = [
@@ -65,7 +77,7 @@ export function Documentation() {
             <Sparkles className="size-4.5" />
           </span>
           <h3 className="mt-3.5 text-sm font-semibold text-slate-900 dark:text-white">
-            Formatting controls
+            Workspace controls
           </h3>
           <dl className="mt-3 space-y-2.5">
             {controls.map((item) => (

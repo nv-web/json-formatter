@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Braces, Menu, Moon, Sun, X } from 'lucide-react'
 import { cx } from '../lib/cx'
-import type { Theme } from '../types/ui'
+import { screenHref } from '../hooks/useScreen'
+import type { Screen, Theme } from '../types/ui'
 
-const links = [
-  { href: '#workspace', label: 'Formatter' },
-  { href: '#input-panel', label: 'Validator' },
-  { href: '#docs', label: 'Documentation' },
+const links: Array<{ screen: Screen; label: string }> = [
+  { screen: 'formatter', label: 'Formatter' },
+  { screen: 'compare', label: 'Compare' },
+  { screen: 'convert', label: 'Convert' },
+  { screen: 'schema', label: 'Schema' },
+  { screen: 'docs', label: 'Documentation' },
 ]
 
 interface HeaderProps {
   theme: Theme
+  screen: Screen
   onToggleTheme: () => void
 }
 
-export function Header({ theme, onToggleTheme }: HeaderProps) {
+export function Header({ theme, screen, onToggleTheme }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -30,7 +34,11 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl dark:border-white/10 dark:bg-[#070a10]/85">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-7">
-          <a href="#top" className="group flex shrink-0 items-center gap-2.5" aria-label="JSONify home">
+          <a
+            href={screenHref('home')}
+            className="group flex shrink-0 items-center gap-2.5"
+            aria-label="JSONify home"
+          >
             <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-indigo-500 to-sky-500 text-white shadow-lg shadow-violet-500/25 transition-transform duration-200 group-hover:scale-105">
               <Braces className="size-[18px]" strokeWidth={2.4} />
             </span>
@@ -48,15 +56,24 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
           </a>
 
           <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="rounded-lg px-3 py-2 text-[13px] font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.06] dark:hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) => {
+              const active = link.screen === screen
+              return (
+                <a
+                  key={link.screen}
+                  href={screenHref(link.screen)}
+                  aria-current={active ? 'page' : undefined}
+                  className={cx(
+                    'rounded-lg px-3 py-2 text-[13px] font-medium transition-colors',
+                    active
+                      ? 'bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.06] dark:hover:text-white',
+                  )}
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </nav>
         </div>
 
@@ -101,30 +118,25 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
           className="animate-fade-up border-t border-slate-200/70 bg-white px-4 py-3 dark:border-white/10 dark:bg-[#070a10] md:hidden"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.06]"
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href="#stats"
-              onClick={() => setMenuOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.06]"
-            >
-              Statistics
-            </a>
-            <a
-              href="#tree"
-              onClick={() => setMenuOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.06]"
-            >
-              Tree viewer
-            </a>
+            {links.map((link) => {
+              const active = link.screen === screen
+              return (
+                <a
+                  key={link.screen}
+                  href={screenHref(link.screen)}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={active ? 'page' : undefined}
+                  className={cx(
+                    'rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                    active
+                      ? 'bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-white/[0.06]',
+                  )}
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </nav>
         </div>
       )}

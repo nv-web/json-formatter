@@ -10,11 +10,18 @@ import { ValidationBanner } from './components/ValidationBanner'
 import { StatsSection } from './components/StatsSection'
 import { TreeViewer } from './components/TreeViewer'
 import { Documentation } from './components/Documentation'
+import { CompareWorkspace } from './components/CompareWorkspace'
+import { ConvertWorkspace } from './components/ConvertWorkspace'
+import { SchemaWorkspace } from './components/SchemaWorkspace'
 import { PrivacyModal } from './components/PrivacyModal'
 import { Footer } from './components/Footer'
 import { Toast } from './components/Toast'
 import { useTheme } from './hooks/useTheme'
 import { useJsonWorker } from './hooks/useJsonWorker'
+import { useCompareDocuments } from './hooks/useCompareDocuments'
+import { useConverter } from './hooks/useConverter'
+import { useSchemaGenerator } from './hooks/useSchemaGenerator'
+import { useScreen } from './hooks/useScreen'
 import {
   DEFAULT_OPTIONS,
   formatBytes,
@@ -54,6 +61,7 @@ export default function App() {
   const [toast, setToast] = useState<ToastMessage | null>(null)
   const [privacyOpen, setPrivacyOpen] = useState(false)
 
+  const screen = useScreen()
   const { theme, toggleTheme } = useTheme()
   const { result, isProcessing, refresh } = useJsonWorker(text, options)
 
@@ -66,6 +74,10 @@ export default function App() {
     setToast({ id: toastId.current, tone, message })
     toastTimer.current = window.setTimeout(() => setToast(null), 3800)
   }, [])
+
+  const compareDocuments = useCompareDocuments(showToast)
+  const converter = useConverter(showToast)
+  const schemaGenerator = useSchemaGenerator(showToast)
 
   useEffect(() => {
     return () => {
@@ -255,6 +267,8 @@ export default function App() {
   }, [text, options, viewMode, filename, showToast])
 
   useEffect(() => {
+    if (screen !== 'formatter') return
+
     const onKeyDown = (event: KeyboardEvent) => {
       const modifier = event.ctrlKey || event.metaKey
       if (!modifier) return
@@ -270,7 +284,7 @@ export default function App() {
 
     window.addEventListener('keydown', onKeyDown, true)
     return () => window.removeEventListener('keydown', onKeyDown, true)
-  }, [handleValidate, handleMinify])
+  }, [handleValidate, handleMinify, screen])
 
   const validationState: ValidationState = result.empty
     ? 'empty'
@@ -280,96 +294,120 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      <Header theme={theme} onToggleTheme={toggleTheme} />
+      <Header theme={theme} onToggleTheme={toggleTheme} screen={screen} />
 
-      <main>
-        <Hero />
+      <main key={screen} className="animate-fade-up">
+        {screen === 'home' && <Hero />}
 
-        <section
-          id="workspace"
-          className="mx-auto max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8"
-        >
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-                Live workspace
+        {screen === 'formatter' && (
+          <section
+            id="workspace"
+            className="mx-auto max-w-7xl scroll-mt-24 px-4 pt-10 sm:px-6 lg:px-8"
+          >
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                  Live workspace
+                </span>
+              </div>
+              <span className="text-[11px] text-slate-400">
+                Auto-validation · 260 ms debounce · Web Worker
               </span>
             </div>
-            <span className="text-[11px] text-slate-400">
-              Auto-validation · 260 ms debounce · Web Worker
-            </span>
-          </div>
 
-          <div className="card overflow-hidden">
-            <FormatToolbar
-              options={options}
-              onOptionsChange={setOptions}
-              viewMode={viewMode}
-              onFormat={handleFormat}
-              onMinify={handleMinify}
-              onValidate={handleValidate}
-              onReset={handleReset}
-              canReset={text.length > 0 || fileInfo !== null}
-            />
-
-            <div className="grid lg:grid-cols-2">
-              <InputPanel
-                value={text}
-                onChange={setText}
-                dark={theme === 'dark'}
-                errorLine={result.error?.line ?? null}
-                validationState={validationState}
-                isProcessing={isProcessing}
-                fileName={fileInfo?.name ?? null}
-                fileSize={fileInfo?.size ?? null}
-                onFile={handleFile}
-                onClear={handleClear}
-                onLoadSample={handleLoadSample}
-              />
-              <OutputPanel
-                result={result}
+            <div className="card overflow-hidden">
+              <FormatToolbar
+                options={options}
+                onOptionsChange={setOptions}
                 viewMode={viewMode}
+                onFormat={handleFormat}
+                onMinify={handleMinify}
+                onValidate={handleValidate}
+                onReset={handleReset}
+                canReset={text.length > 0 || fileInfo !== null}
+              />
+
+              <div className="grid lg:grid-cols-2">
+                <InputPanel
+                  value={text}
+                  onChange={setText}
+                  dark={theme === 'dark'}
+                  errorLine={result.error?.line ?? null}
+                  validationState={validationState}
+                  isProcessing={isProcessing}
+                  fileName={fileInfo?.name ?? null}
+                  fileSize={fileInfo?.size ?? null}
+                  onFile={handleFile}
+                  onClear={handleClear}
+                  onLoadSample={handleLoadSample}
+                />
+                <OutputPanel
+                  result={result}
+                  viewMode={viewMode}
+                  isProcessing={isProcessing}
+                  dark={theme === 'dark'}
+                  filename={filename}
+                  onFilenameChange={(value) => {
+                    setFilename(value)
+                    setFilenameTouched(true)
+                  }}
+                  onCopy={handleCopy}
+                  onDownload={handleDownload}
+                  onLoadSample={handleLoadSample}
+                />
+              </div>
+
+              <ValidationBanner result={result} isProcessing={isProcessing} />
+            </div>
+
+            <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-slate-400">
+              <ShieldCheck className="size-3.5 text-emerald-500" />
+              100% client-side processing. Your JSON never leaves this browser tab.
+            </p>
+
+            <div className="mt-12">
+              <StatsSection
+                stats={result.stats}
+                durationMs={result.durationMs}
                 isProcessing={isProcessing}
-                dark={theme === 'dark'}
-                filename={filename}
-                onFilenameChange={(value) => {
-                  setFilename(value)
-                  setFilenameTouched(true)
-                }}
-                onCopy={handleCopy}
-                onDownload={handleDownload}
-                onLoadSample={handleLoadSample}
               />
             </div>
 
-            <ValidationBanner result={result} isProcessing={isProcessing} />
-          </div>
+            <div className="mt-10">
+              <TreeViewer result={result} onLoadSample={handleLoadSample} />
+            </div>
+          </section>
+        )}
 
-          <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-slate-400">
-            <ShieldCheck className="size-3.5 text-emerald-500" />
-            100% client-side processing. Your JSON never leaves this browser tab.
-          </p>
-        </section>
+        {screen === 'compare' && (
+          <CompareWorkspace dark={theme === 'dark'} documents={compareDocuments} />
+        )}
 
-        <div className="mx-auto mt-12 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <StatsSection
-            stats={result.stats}
-            durationMs={result.durationMs}
-            isProcessing={isProcessing}
+        {screen === 'convert' && (
+          <ConvertWorkspace
+            dark={theme === 'dark'}
+            converter={converter}
+            onNotify={showToast}
           />
-        </div>
+        )}
 
-        <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <TreeViewer result={result} onLoadSample={handleLoadSample} />
-        </div>
+        {screen === 'schema' && (
+          <SchemaWorkspace
+            dark={theme === 'dark'}
+            generator={schemaGenerator}
+            onNotify={showToast}
+          />
+        )}
 
-        <div className="mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Documentation />
-        </div>
+        {screen === 'docs' && (
+          <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
+            <Documentation />
+          </div>
+        )}
       </main>
 
       <Footer onOpenPrivacy={() => setPrivacyOpen(true)} />

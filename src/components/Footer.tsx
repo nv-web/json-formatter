@@ -13,7 +13,7 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-[1.6fr_1fr_1fr]">
           <div>
-            <a href="#top" className="inline-flex items-center gap-2.5">
+            <a href="#/home" className="inline-flex items-center gap-2.5">
               <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-indigo-500 to-sky-500 text-white shadow-lg shadow-violet-500/20">
                 <Braces className="size-[18px]" strokeWidth={2.4} />
               </span>
@@ -38,23 +38,23 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
             </h3>
             <ul className="mt-3 space-y-2 text-xs">
               <li>
-                <a href="#workspace" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                <a href="#/formatter" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
                   Formatter
                 </a>
               </li>
               <li>
-                <a href="#input-panel" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
-                  Validator
+                <a href="#/compare" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                  Compare
                 </a>
               </li>
               <li>
-                <a href="#stats" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
-                  Statistics
+                <a href="#/convert" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                  CSV ↔ JSON
                 </a>
               </li>
               <li>
-                <a href="#tree" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
-                  Tree viewer
+                <a href="#/schema" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                  Schema examples
                 </a>
               </li>
             </ul>
@@ -66,12 +66,12 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
             </h3>
             <ul className="mt-3 space-y-2 text-xs">
               <li>
-                <a href="#docs" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                <a href="#/docs" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
                   Documentation
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
+                <a href="#/docs" className="text-slate-500 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400">
                   About
                 </a>
               </li>
@@ -103,13 +103,14 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
           <p>© {currentYear} JSONify. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span>Client-side by design.</span>
-            <a
-              href="#top"
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="inline-flex items-center gap-1 rounded-md px-2 py-1 transition-colors hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-white/[0.06] dark:hover:text-slate-200"
             >
               Back to top
               <ArrowUp className="size-3" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
