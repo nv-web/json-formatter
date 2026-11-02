@@ -35,9 +35,9 @@ export function Hero() {
           </div>
 
           <h1 className="animate-fade-up animation-delay-1 mt-6 text-balance text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.035em] text-slate-900 dark:text-white sm:text-6xl lg:text-[4.25rem]">
-            JSON Formatter{' '}
+            JSON
             <span className="bg-gradient-to-r from-violet-600 via-indigo-500 to-sky-500 bg-clip-text text-transparent dark:from-violet-400 dark:via-indigo-400 dark:to-sky-400">
-              Pro
+              ify
             </span>
           </h1>
 

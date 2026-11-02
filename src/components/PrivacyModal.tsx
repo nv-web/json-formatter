@@ -67,7 +67,7 @@ export function PrivacyModal({ open, onClose }: PrivacyModalProps) {
 
         <div className="mt-4 space-y-3 text-xs leading-5 text-slate-600 dark:text-slate-400">
           <p>
-            JSON Formatter Pro is a purely client-side tool. Everything you paste, upload, format,
+            JSONify is a purely client-side tool. Everything you paste, upload, format,
             or download is processed inside your browser tab.
           </p>
 

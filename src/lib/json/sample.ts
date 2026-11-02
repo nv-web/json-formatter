@@ -1,5 +1,5 @@
 export const SAMPLE_JSON = `{
-  "project": "JSON Formatter Pro",
+  "project": "JSONify",
   "version": "1.0.0",
   "private": true,
   "features": ["format", "validate", "minify", "tree view", "statistics"],

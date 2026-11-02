@@ -1,12 +1,15 @@
-# JSON Formatter Pro
+# JSONify
 
 [![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)](https://vite.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06b6d4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-jsonify--tool.vercel.app-000000?logo=vercel&logoColor=white)](https://jsonify-tool.vercel.app)
 
 A fast, private JSON workspace that runs entirely in your browser. Paste, drop, or upload JSON to format, minify, validate, and explore it. Nothing is uploaded to a server, and your JSON is never stored.
+
+**[Open the live app →](https://jsonify-tool.vercel.app)**
 
 **Jump to:** [Features](#features) · [Try it](#try-it-in-30-seconds) · [How it works](#how-it-works) · [Getting Started](#getting-started) · [Shortcuts](#keyboard-shortcuts) · [Structure](#project-structure) · [FAQ](#faq)
 
@@ -28,7 +31,7 @@ A fast, private JSON workspace that runs entirely in your browser. Paste, drop, 
 
 ## Try it in 30 seconds
 
-Use this checklist the first time you open the app:
+Open **[jsonify-tool.vercel.app](https://jsonify-tool.vercel.app)** and use this checklist:
 
 - [ ] Paste JSON into the input editor, drop a `.json` file on it, or press **Load sample**
 - [ ] Pick an indentation style and toggle **Sort keys**, **Pretty nested**, or **Array layout**
@@ -64,7 +67,7 @@ All parsing, validation, formatting, and statistics happen locally on your devic
 - No third-party tracking scripts are loaded.
 - Imported files are read with the browser File API.
 - Downloads are generated in-browser with a Blob and object URL.
-- The only persisted value is the `json-formatter-pro-theme` preference.
+- The only persisted value is the `jsonify-theme` preference.
 
 </details>
 
@@ -106,6 +109,18 @@ npm run preview  # Preview the production build
 ```
 
 </details>
+
+## Deployment
+
+The app is deployed on Vercel at **[jsonify-tool.vercel.app](https://jsonify-tool.vercel.app)**.
+
+To deploy your own copy, import the repository into Vercel and use the default Vite settings:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Install command | `npm install` |
 
 ## Keyboard Shortcuts
 

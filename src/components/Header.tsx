@@ -30,15 +30,15 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl dark:border-white/10 dark:bg-[#070a10]/85">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-7">
-          <a href="#top" className="group flex shrink-0 items-center gap-2.5" aria-label="JSON Formatter Pro home">
+          <a href="#top" className="group flex shrink-0 items-center gap-2.5" aria-label="JSONify home">
             <span className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-indigo-500 to-sky-500 text-white shadow-lg shadow-violet-500/25 transition-transform duration-200 group-hover:scale-105">
               <Braces className="size-[18px]" strokeWidth={2.4} />
             </span>
             <span className="flex flex-col leading-none">
               <span className="text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
-                JSON Formatter{' '}
+                JSON
                 <span className="bg-gradient-to-r from-violet-600 to-sky-500 bg-clip-text text-transparent dark:from-violet-400 dark:to-sky-400">
-                  Pro
+                  ify
                 </span>
               </span>
               <span className="mt-1 hidden text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-400 sm:block">

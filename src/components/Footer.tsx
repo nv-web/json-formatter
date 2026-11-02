@@ -18,8 +18,8 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
                 <Braces className="size-[18px]" strokeWidth={2.4} />
               </span>
               <span className="text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
-                JSON Formatter{' '}
-                <span className="text-violet-600 dark:text-violet-400">Pro</span>
+                JSON
+                <span className="text-violet-600 dark:text-violet-400">ify</span>
               </span>
             </a>
             <p className="mt-3 max-w-sm text-xs leading-5 text-slate-500 dark:text-slate-400">
@@ -100,7 +100,7 @@ export function Footer({ onOpenPrivacy }: FooterProps) {
         </div>
 
         <div className="mt-9 flex flex-col gap-3 border-t border-slate-200/80 pt-5 text-[11px] text-slate-400 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {currentYear} JSON Formatter Pro. All rights reserved.</p>
+          <p>© {currentYear} JSONify. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <span>Client-side by design.</span>
             <a

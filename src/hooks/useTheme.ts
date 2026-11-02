@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { Theme } from '../types/ui'
 
-const STORAGE_KEY = 'json-formatter-pro-theme'
+const STORAGE_KEY = 'jsonify-theme'
 
 function getInitialTheme(): Theme {
   try {
