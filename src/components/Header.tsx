@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Braces, Menu, Moon, Sun, X } from 'lucide-react'
 import { cx } from '../lib/cx'
 import type { Theme } from '../types/ui'
-import { GithubIcon } from './ui/GithubIcon'
 
 const links = [
   { href: '#workspace', label: 'Formatter' },
@@ -82,17 +81,6 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
               )}
             />
           </button>
-
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noreferrer noopener"
-            title="View on GitHub"
-            aria-label="View on GitHub"
-            className="inline-flex size-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 shadow-sm transition-colors hover:bg-slate-50 hover:text-slate-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.08] dark:hover:text-white"
-          >
-            <GithubIcon className="size-[17px]" />
-          </a>
 
           <button
             type="button"
